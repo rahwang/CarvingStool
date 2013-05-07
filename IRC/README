@@ -1,0 +1,15 @@
+This is a simple IRC server which implements basic functionality including registration, private messaging, channels and modes for multiple clients.
+
+Runs on port 7776 by default.
+
+To test on local host, start the server by running 'make' then 
+'../chirc -o INSERTOPERATORPASSWORD'.
+
+Open a connection as a client with telnet,
+'telnet localhost 7776'.
+
+
+Developed by Rachel Hwang and Adam Shaw for CMSC 23300 Project 1. 
+
+To see project specifications and specific commands implemented, go to
+http://www.classes.cs.uchicago.edu/archive/2013/spring/23300-1/chirc_project_specification.pdf
