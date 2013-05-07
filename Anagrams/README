@@ -1,0 +1,18 @@
+Included files:
+
+-anagrams.py
+-dictionary.txt
+-output.txt
+
+Given a dictionary, this program can identify anagrams. My 'algorithm' for finding anagrams is very simple, for every word in the dicionary, I take the string consisting of the alphabetized letters of the word and use that as a key in my dictionary. The dictionary entry is a list of words that all use that key. For example:
+
+word: 'silent'
+alphabetized key: 'ielnst'
+after adding this word to the dictionary,
+dic['ielnst'] : ['listen','silent', etc.]
+
+In the main() in anagrams first builds this dictionary from the words in dictionary.txt. Next is a commented out block which would create a list called 'anagrams' which stored all the anagram sets sorted by length. Finally, as requested, the program prints all anagram sets of length >= 6, sorted by
+descending size, then descending length, then ascending overlap scored (total for the whole anagram set).
+
+'Surprising anagrams'
+I did not have time to implement anything for this, but it's a very interesting problem. The most 'surprising' anagrams in my experience are those that are long, have very low overlap scores but are words related to the same topic, ie. (integral + triangle), (silent + listen), (admirer, married). Topic marking is obviously very difficult to implement, so my algorithm would select just for the longest word pairs with lowest overlap. This problem might even go nicely with the string-edit program, since anagrams with higher string-edit difference are less obvious, therefore bound to be more surprising.

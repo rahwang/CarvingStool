@@ -1,0 +1,21 @@
+Included files:
+- str_dist.py
+- output.txt
+
+Using the given string-edit costs, str_dist.py calculates the minimum cost between two strings and every combination of their substrings ("D[i][j]"). 
+The program asks user to input two strings then outputs minimum string-edit distance between both complete strings, the pairs that define the minimum cost trace, and a little diagram that illustrates the best alignment. Bonus: also outputs the longest common substring and its length (Sorry, adding that made the rest of my code a little messier...)
+
+Examples:
+
+For "thenameofthegame" and "theresmyname",
+string-edit distance is 7.0.
+
+t h e n a m e o f t h e g a m e
+t h e r     e   s m y   n a m e
+
+
+For "ninakushukuru" and "unamshukuru",
+string-edit distance is 3.1.
+
+n i n a k u s h u k u r u
+  u n a m   s h u k u r u

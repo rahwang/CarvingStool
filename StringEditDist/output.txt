@@ -1,0 +1,15 @@
+String 1: helloworld
+String 2: world
+
+String-edit distance is 5.0.
+
+
+Trace:
+[(5, 0), (6, 1), (7, 2), (8, 3), (9, 4)]
+
+h e l l o w o r l d
+          w o r l d
+
+Longest common subsequence is "world", length 5.
+
+
