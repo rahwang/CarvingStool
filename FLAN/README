@@ -4,4 +4,4 @@ Included here are two images of the FLAN site, as well as a php file implementin
 
 Unfortunately, FLAN is down at the moment, due to some structural changes we've made to the database. Further examples and images will be available as soon as the site goes back online.
 
-I have spent about a year maintaining, updating, and adding functionality to the original FLAN code, to the point where it's difficult to point to which code is whose. As an example of work I am sure is 100% mine, see lines 773-863 in allSearches.php. This chunk of code implements a special diagram that displays apogee position and duration in a single instance of a finger-spelled word.
+I have spent about a year maintaining, updating, and adding functionality to the original FLAN code that Jon wrote, to the point where it's sometimes difficult to point to which code is whose. As an example of work I am sure is 100% mine, see lines 773-863 in allSearches.php. This chunk of code implements a special diagram that displays apogee position and duration in a single instance of a finger-spelled word.
