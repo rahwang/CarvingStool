@@ -11,5 +11,8 @@ Open a connection as a client with telnet,
 
 Developed by Rachel Hwang and Adam Shaw for CMSC 23300 Project 1. 
 
+The simclist library (implementing a API for a linked list struct) is not ours! It is available at,
+http://mij.oltrelinux.com/devel/simclist/
+
 To see project specifications and specific commands implemented, go to
 http://www.classes.cs.uchicago.edu/archive/2013/spring/23300-1/chirc_project_specification.pdf
