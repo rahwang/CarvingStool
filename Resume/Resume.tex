@@ -1,0 +1,174 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plasmati Graduate CV
+% LaTeX Template
+% Version 1.0 (24/3/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Alessandro Plasmati (alessandro.plasmati@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template needs to be compiled with XeLaTeX.
+% The main document font is called Fontin and can be downloaded for free
+% from here: http://www.exljbris.com/fontin.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,10pt]{article} % Default font size and paper size
+
+\usepackage{xunicode,xltxtra,url,parskip} % Formatting packages
+
+\usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
+
+%\usepackage[big]{layaureo} % Margin formatting of the A4 page, an alternative to layaureo can be 
+%\usepackage{fullpage}
+\usepackage[top=.5in, left=1in, right=1in, bottom=.5in]{geometry}
+% To reduce the height of the top margin uncomment: 
+
+
+\usepackage{hyperref} % Required for adding links	and customizing them
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+
+\begin{document}
+
+\pagestyle{empty} % Removes page numbering
+
+\font\fb=''[cmr10]'' % Change the font of the \LaTeX command under the skills section
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\par{\centering{\LARGE Rachel \textsc{Hwang}}\par} % Your name
+\vspace{10pt}
+\hrule
+
+\begin{center}
+\begin{tabular}{c}
+\href{mailto:rah1@uchicago.edu}{rah1@uchicago.edu}\hspace{5pt}\textbullet\hspace{6pt}1325 17\textsuperscript{th} Ave, San Francisco, CA, USA\hspace{6pt}\textbullet\hspace{5pt}(415) 515-6176\\
+\end{tabular}
+\end{center}
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE 
+%----------------------------------------------------------------------------------------
+
+\section{Work Experience}
+
+\begin{tabular}{r|p{11cm}}
+\emph{Current} & Student Programmer at \textsc{Computation Institute}, Chicago\\
+\textsc{Summer 2013} & \footnotesize{Developed software tools for analyzing and plotting energy usage data and Chicago movement data, instructed students in basic Python.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\emph{Current} & Research Assistant at \textsc{Chicago Language Modeling Lab}, Chicago \emph{}\\
+\textsc{Fall 2011-} & \footnotesize{Wrote scripts to streamline data acquisition, maintained American Sign Language fingerspelling database and annotation website, annotated speech clips for analysis, coded experiment setups.} \\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\emph{Current} & Game Mentor at \textsc{Game Changer Chicago}, Chicago\\
+\textsc{Summer 2013} & \footnotesize{Facilitated gameplay and mentored high school students for the duration of five-week educational alternate reality game.}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{Jan-May 2013} & Programming and Robotics Teacher\\ 
+& at \textsc{PyBot, Neighborhood Schools Program}, Chicago\\
+& \footnotesize{Taught middle school students programming fundamentals in Python and Arduino, designed lesson plans and exercises.} \\
+\multicolumn{2}{c}{} \\
+
+\textsc{Summer 2011} & Operations Rotation Development Program Intern\\ 
+& at \textsc{Genentech}, South San Francisco\\
+& \footnotesize{Assessed and optimized documentation procedures in the Purification Plant.}
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\section{Education}
+
+\begin{tabular}{rl}	
+\textsc{2010-2014} & \textbf{The University of Chicago}, Chicago\\
+& Undergraduate in \textsc{computer science} and \textsc{linguistics} \\
+& Advisor: Jason Riggle \vspace{9pt}\\
+
+%------------------------------------------------
+
+\textsc{Summer 2012} & \textbf{The University of Chicago Center in Beijing}, Beijing\\
+& Mandarin Summer Language Program \vspace{9pt}\\
+
+%------------------------------------------------
+
+\textsc{2006-2010} & \textbf{Lowell High School} (public magnet), San Francisco\\
+& \textsc{The Lowell} newspaper Editor-in-Chief 
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	SCHOLARSHIPS AND ADDITIONAL INFO
+%----------------------------------------------------------------------------------------
+
+\section{Scholarships and Achievments}
+
+\begin{tabular}{rl}
+\vspace{2pt}\textsc{2010-2014} & University of Chicago Merit Scholarship \footnotesize(\$40,000)\normalsize\\
+\vspace{2pt}\textsc{2010-2013} & University of Chicago Dean's List 2010-2013\\
+\textsc{Summer 2012} & University of Chicago Foreign Language Acquisition Grant \footnotesize(\$3,000)\normalsize\\
+
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	INTERESTS AND ACTIVITIES
+%----------------------------------------------------------------------------------------
+
+\section{Other Experience}
+
+\begin{tabular}{r|p{11cm}}
+\textsc{Fall 2012-} & Judge for \textsc{The University of Chicago Scavenger Hunt}\\
+& \footnotesize{Designed and organized the world's largest scavenger hunt.}\\
+\multicolumn{2}{c}{} \\
+%------------------------------------------------
+
+\textsc{Jan-May 2011} & Layout Editor at \textsc{The Chicago Maroon}\\
+& \footnotesize{Designed and edited page layout for a student-run publication.}\\
+\multicolumn{2}{c}{} \\
+%------------------------------------------------
+
+\textsc{Jan-May 2011} & Creative Writing Tutor for \textsc{South Side Scribblers}\\
+& \footnotesize{Designed and edited page layout for a student publication.}
+\end{tabular}
+
+%----------------------------------------------------------------------------------------
+%	SKILLS 
+%----------------------------------------------------------------------------------------
+
+\section{Skills and Tools}
+
+\begin{tabular}{rl}
+\vspace{2pt}\textsc{Technical} & C, Python, \textsc{php}, my\textsc{sql}, \textsc{html}, Linux/\textsc{unix}, Praat, Arduino, {\fb \LaTeX}, git\\
+\vspace{2pt}\textsc{Design} & Adobe Photoshop, Adobe InDesign\\
+\hspace{10pt}\textsc{Languages} & English, Mandarin (intermediate), Spanish (intermediate) \\
+\end{tabular}
+
+\vspace{20pt}
+\begin{center}
+\footnotesize{Updated 7/16/13.}
+\end{center}
+
+\end{document}
