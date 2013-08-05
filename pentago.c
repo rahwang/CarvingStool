@@ -5,7 +5,7 @@
 #define ROWS 6
 #define COLS 6
 
-int win = 0;
+  int win = 0;
 
 // print ascii board
 void printBoard(char **b) 
@@ -13,7 +13,7 @@ void printBoard(char **b)
   int r, c;
   char r_label[ROWS] = {'A', 'B', 'C', 'D', 'E', 'F'};
   char c_label[COLS] = {'0', '1', '2', '3', '4', '5'};
-  char *border = "+ - + - + - + + - + - + - +\n";
+  char *border = "+ - + - + - +   + - + - + - +\n";
   printf("\n\n\n");
   
   printf("   ");
@@ -22,12 +22,16 @@ void printBoard(char **b)
       printf("  %c ", c_label[c]);
       if (c == 2) 
 	{
-	  printf("  ");
+	  printf("    ");
 	}
     }
   printf("\n");
   for (r = 0; r < ROWS; r++) 
     {
+
+      if (r == 3)
+	printf("\n");
+
       if (r == 0 || r == 3)
 	{
 	  printf("   %s", border);
@@ -38,8 +42,9 @@ void printBoard(char **b)
 	  printf(" %c |", b[r][c]);
 	  if (c == 2) 
 	    {
-	      printf(" |");
+	      printf("   |");
 	    }
+
 	  if (c == 5)
 	    {
 	      printf("\n");
@@ -55,12 +60,12 @@ char *fg(char *buf)
 {
   if (fgets(buf, sizeof(buf), stdin) != 0)
     {
-        size_t len = strlen(buf);
-        if (len > 0 && buf[len-1] == '\n')
-            buf[len-1] = '\0';
-        return buf;
+      size_t len = strlen(buf);
+      if (len > 0 && buf[len-1] == '\n')
+	buf[len-1] = '\0';
+      return buf;
     }
-    return 0;
+  return 0;
 }
 
 // Check if move is valid. Update board if valid, return 1 if not.
@@ -71,7 +76,8 @@ int checkM(char *m, int player, char **board)
 
   if (strlen(m) == 2)
     {
-      r = m[0] - 'A';
+      
+      r = m[0] < 'a' ? m[0]-'A': m[0]-'a';
       c = m[1] - '0';
       if (((r >= 0) && (r <= 5)) &&
 	  ((r >= 0) && (c <= 5)) &&
@@ -148,8 +154,8 @@ int checkR(char *rot, int player, char **board)
 }
 
 void printbits(long long int v) {
-   for (; v; v >>= 1) putchar('0' + (v & 1));
-   printf("\n");
+  for (; v; v >>= 1) putchar('0' + (v & 1));
+  printf("\n");
 }
 
 int checkWin(int player, char **board)
