@@ -123,7 +123,7 @@ void rotate(int quad, int dir, char** board)
 	  else 
 	    {
 	      r -= 2;
-	      r = (r > 0) ? r : 0-r;
+ 	      r = (r > 0) ? r : 0-r;
 	    } 
 	  board[r_start+i][c_start+j] = tmp[r][c];
 	}
