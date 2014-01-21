@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "stopwatch.h"
 #include <pthread.h>
+#include <time.h>
 
 
 // Declare mutex 
@@ -24,6 +25,25 @@ typedef struct thr_data_t {
   int n;
 } thr_data_t;
 
+
+int *random_m(int n)
+{
+    int i, j;
+    int *new = (int *) malloc(n*n*sizeof(int));
+
+    srand(time(NULL));
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (i != j)
+                new[i*n+j] = (int) rand() % 20;
+            else
+                new[i*n+j] = 0;
+        }
+    }
+
+    return new;
+}
 
 // Thread function: complete a row of the Floyd-Warshall algorithm
 void *thr_row(void *arg) {
@@ -137,17 +157,15 @@ int main(int argc, char *argv[])
   // Read values into adjacency matrix
   readm(a, n, src);
   
-  // Pretty print a matrix for testing.
+  /*  // Pretty print a matrix for testing.
   printf("\nInput values:\n");
-  pprint(a, n);
+  pprint(a, n); */
 
   // Start timing
   startTimer(&watch);
 
   // Initialize mutex
   pthread_mutex_init(&c_lock, NULL);
-
-
   // Initialize barriers
   pthread_barrier_init(&b1, NULL, num+1);
   pthread_barrier_init(&b2, NULL, num+1);
@@ -184,11 +202,11 @@ int main(int argc, char *argv[])
   // Stop timing
   stopTimer(&watch);
 
-  // Pretty print a matrix for testing.
+  /*  // Pretty print a matrix for testing.
   printf("\nOutput values:\n");
-  pprint(a, n);
+  pprint(a, n); */
 
-  // Elapsed time
+  // Print elapsed time
   printf("n = %d\nruntime = %f\n\n", n, getElapsedTime(&watch));
 
   // Output matrix to file
