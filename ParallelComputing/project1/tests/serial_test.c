@@ -1,124 +1,101 @@
 #include <stdio.h>
 #include <string.h>
-#include "CUnit/Basic.h"
+#include "../src/funcs.h"
 
 
-/* Pointer to the file used by the tests. */
-static FILE* temp_file = NULL;
-
-/* The suite initialization function.
- * Opens the temporary file used by the tests.
- * Returns zero on success, non-zero otherwise.
+/* Simple test of writem()
+ * Checks that file is written
  */
-int init_suite1(void)
-{
-   if (NULL == (temp_file = fopen("temp.txt", "w+"))) {
-      return -1;
-   }
-   else {
-      return 0;
-   }
-}
+int testWRITEM(int *m, int n, char *fname) {
+  int i, j, read;
 
-/* The suite cleanup function.
- * Closes the temporary file used by the tests.
- * Returns zero on success, non-zero otherwise.
- */
-int clean_suite1(void)
-{
-   if (0 != fclose(temp_file)) {
-      return -1;
-   }
-   else {
-      temp_file = NULL;
-      return 0;
-   }
-}
+  writem(m, n, fname);
 
-/* Generates a random nxn matrix */
-int *randomM(int n)
-{
-    int i, j;
-    int *new = (int *) malloc(n*n*sizeof(int));
-
-    srand(time(NULL));
-
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            if (i != j)
-                new[i*n+j] = (int) rand() % 20;
-            else
-                new[i*n+j] = 0;
-        }
+  FILE *dst = fopen(fname, "r");
+  for (i = 0; i < 25; i++) {
+    read = fscanf(dst, "%d", &j);
+    if (!read) {
+      return 1;
     }
-
-    return new;
-}
-
+  }
+  fclose(dst);
+  return 0;
+}  
 
 
 /* Simple test of readm().
- * Writes random matrix to file and checks whether read 
+ * check if read matrix matches given
  * matrix matches expected values
  */
-void testREADM(void)
-{
-  int *m = randomM(10);
+int testREADM(int *m, int *a, int n, char *fname) {
 
-   if (NULL != temp_file) {
-      CU_ASSERT(0 == fprintf(temp_file, ""));
-      CU_ASSERT(2 == fprintf(temp_file, "Q\n"));
-      CU_ASSERT(7 == fprintf(temp_file, "i1 = %d", i1));
-   }
+  FILE *f = fopen(fname, "r");
+  if (!f){
+    fprintf(stderr, "Unable to open file\n");
+    exit(1);
+  }    
+  
+  readm(a, n, f);
+
+  return compareM(m, a, n);
 }
 
-/* Simple test of fread().
- * Reads the data previously written by testFPRINTF()
- * and checks whether the expected characters are present.
- * Must be run after testFPRINTF().
- */
-void testFREAD(void)
-{
-   unsigned char buffer[20];
 
-   if (NULL != temp_file) {
-      rewind(temp_file);
-      CU_ASSERT(9 == fread(buffer, sizeof(unsigned char), 20, temp_file));
-      CU_ASSERT(0 == strncmp(buffer, "Q\ni1 = 10", 9));
-   }
+/* Test of floyd()
+ * Compares results of matrix after running floyd
+ * to the expected value */
+int testFLOYD(char *f1, char *f2) {
+  int n, read;
+
+  // test matrices
+  FILE *in = fopen(f1, "r");
+  FILE *out = fopen(f2, "r");
+
+  // get n value
+  read = fscanf(in, "%d\n", &n);
+  if (!read)
+    printf("Error: no values read\n");
+  
+  // allocate space for the matrices
+  int *a = (int *)malloc(sizeof(int)*n*n);
+  int *b = (int *)malloc(sizeof(int)*n*n);
+  
+  // Read values into adjacency matrix
+  readm(a, n, in);
+  readm(b, n, out);
+
+  // Run algorithm
+  floyd(a, n);
+
+  return compareM(a, b, n);
 }
 
-/* The main() function for setting up and running the tests.
- * Returns a CUE_SUCCESS on successful running, another
- * CUnit error code on failure.
- */
-int main()
-{
-   CU_pSuite pSuite = NULL;
 
-   /* initialize the CUnit test registry */
-   if (CUE_SUCCESS != CU_initialize_registry())
-      return CU_get_error();
+int main() {
+  int n = 5;
+  
+  int *m = randomM(n);
 
-   /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_1", init_suite1, clean_suite1);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+  int *a =  (int *) malloc(n*n*sizeof(int));
+  char *fname = "scratch.txt";
+  
+  int t1 = testWRITEM(m, n, fname);
+  int t2 = testREADM(m, a, n, fname);
+  int t3 = testFLOYD("m1.txt", "m1_out.txt");
+  int t4 = testFLOYD("m2.txt", "m2_out.txt");
+  int t5 = testFLOYD("m3.txt", "m3_out.txt");
+  int t6 = testFLOYD("m4.txt", "m4_out.txt");
+  int t7 = testFLOYD("m5.txt", "m5_out.txt");
 
-   /* add the tests to the suite */
-   /* NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() */
-   if ((NULL == CU_add_test(pSuite, "test of fprintf()", testFPRINTF)) ||
-       (NULL == CU_add_test(pSuite, "test of fread()", testFREAD)))
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
+  printf("\nTESTS for serial_floyd.c\n\n");
 
-   /* Run all tests using the CUnit Basic interface */
-   CU_basic_set_mode(CU_BRM_VERBOSE);
-   CU_basic_run_tests();
-   CU_cleanup_registry();
-   return CU_get_error();
+  printf("| %25s: %20s |\n", "WRITEM", res(t1));
+  printf("| %25s: %20s |\n", "READM", res(t2));
+  printf("| %25s: %20s |\n", "FLOYD1 (n = 5)", res(t3));
+  printf("| %25s: %20s |\n", "FLOYD2 (n = 10)", res(t4));
+  printf("| %25s: %20s |\n", "FLOYD3 (n = 100)", res(t5));
+  printf("| %25s: %20s |\n", "FLOYD4 (all 0)", res(t6));
+  printf("| %25s: %20s |\n", "FLOYD4 (all INF)", res(t7));
+
+  return 0;
 }

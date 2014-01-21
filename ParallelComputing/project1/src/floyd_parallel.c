@@ -8,159 +8,35 @@
 #include "stopwatch.h"
 #include <pthread.h>
 #include <time.h>
-
-
-// Declare mutex 
-pthread_mutex_t c_lock;
-// Declare barriers
-pthread_barrier_t b1, b2;
-// Declare counter
-int counter = 0;
-
-
-// Thread argument struct for thread function
-typedef struct thr_data_t {
-  int tid;
-  int *matrix;
-  int n;
-} thr_data_t;
-
-
-int *random_m(int n)
-{
-    int i, j;
-    int *new = (int *) malloc(n*n*sizeof(int));
-
-    srand(time(NULL));
-
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            if (i != j)
-                new[i*n+j] = (int) rand() % 20;
-            else
-                new[i*n+j] = 0;
-        }
-    }
-
-    return new;
-}
-
-// Thread function: complete a row of the Floyd-Warshall algorithm
-void *thr_row(void *arg) {
-  thr_data_t *data = (thr_data_t *)arg;
-  int *a = data->matrix;
-  int n = data->n;
-  int i, j, k;
-  i = j = k = 0;
-
-  // printf("THREAD ID %d\n", data->tid);
-  while (1) {
-    // get next row from counter
-    pthread_mutex_lock(&c_lock);
-    i = counter;
-    counter++;
-    pthread_mutex_unlock(&c_lock);
-
-    // printf("%d   %d\n", data->tid, i);
-
-    if (i < n) {
-      if (i != k) {
-	for (j = 0; j < n; j++) {
-	  if (j != k) {
-	    if ((a[i*n+k] + a[k*n+j]) < a[i*n+j])
-	      a[i*n + j] = a[i*n+k] + a[k*n+j];
-	  }
-	}
-      }
-    } else {
-      k++;
-      // printf("%d Waiting for k increment\n", data->tid);
-      pthread_barrier_wait(&b1);
-      pthread_barrier_wait(&b2);
-      if (k == n) {
-	  pthread_exit(NULL);
-      }
-    } 
-  } 
-}
-
-
-// Print a matrix
-void pprint(int *a, int n) {
-  int i, j;
-  for (i = 0; i < n; i++) {
-    for (j = 0; j <n; j++) {
-      printf("%i ", a[i*n + j]);
-    }
-    printf("\n");
-  }
-  printf("\n\n");
-}
-
-
-// Read in matrix values from specified file
-void readm(int *a, int n, FILE *src) {
-  int i;
-  int *cur = a;
-  int read = fscanf(src, "%d", &i);
-  if (!read)
-    printf("Error: no data read\n");
-  while (!feof(src)) {
-    *cur = i;
-    cur++;
-    read = fscanf(src, "%d", &i);
-  }
-  fclose(src);
-}
-
-
-// Output matrix to the specified file
-void writem(int *a, int n, char *fname) {
-  int i, j;
-  FILE *dst = fopen(fname, "w");
-  fprintf(dst, "Updated adjacency matrix (n = %d)\n", n);
-  for (i = 0; i < n; i++) {
-    for (j = 0; j <n; j++) {
-      fprintf(dst, "%i ", a[i*n + j]);
-    }
-    fprintf(dst, "\n");
-  }
-}
+#include "funcs.h"
 
 
 int main(int argc, char *argv[])
 {
-  int i, k, n, read, rc;
+  int i, k, n, read;
   StopWatch_t watch;
   
-  if (!argv[1])
-    printf("Error: no input file name argument given\n");
   if (!argv[2])
+    printf("Error: no input file name argument given\n");
+  if (!argv[1])
     printf("Error: no thread number argument given\n");
 
-  FILE *src = fopen(argv[1], "r");
+  FILE *src = fopen(argv[2], "r");
 
   // get n value
   read = fscanf(src, "%d\n", &n);
   if (!read)
     printf("Error: no values read\n");
 
-  // Create array of threads
-  int num = atoi(argv[2]);
-  pthread_t thr[num];
-  // Create a thread argument array
-  thr_data_t thr_data[num];
-  
+  // Get number of threads
+  int num = atoi(argv[1]);
+    
   // allocate space for the matrix
   int *a = (int *)malloc(sizeof(int)*n*n);
   
   // Read values into adjacency matrix
   readm(a, n, src);
   
-  /*  // Pretty print a matrix for testing.
-  printf("\nInput values:\n");
-  pprint(a, n); */
-
   // Start timing
   startTimer(&watch);
 
@@ -171,15 +47,11 @@ int main(int argc, char *argv[])
   pthread_barrier_init(&b2, NULL, num+1);
 
   // Create threads
-  for (i = 0; i < num; i++) {
-    thr_data[i].tid = i;
-    thr_data[i].n = n;
-    thr_data[i].matrix = a;
-    if ((rc = pthread_create(&thr[i], NULL, thr_row, &thr_data[i]))) {
-      fprintf(stderr, "error: pthread_create, rc: %d\n", rc);
-      return EXIT_FAILURE;
-    }
-  }
+  pthread_t *thr = (pthread_t *)malloc(num*sizeof(pthread_t));
+  // Create a thread argument array
+  thr_data_t *thr_data = (thr_data_t *)malloc(num*sizeof(thr_data_t));
+  // Spawn threads
+  thread(num, n, a, thr, thr_data);
 
   // Floyd-Warshall Algorithm
   k = 0;
@@ -207,7 +79,7 @@ int main(int argc, char *argv[])
   pprint(a, n); */
 
   // Print elapsed time
-  printf("n = %d\nruntime = %f\n\n", n, getElapsedTime(&watch));
+  printf("%f\n\n", getElapsedTime(&watch));
 
   // Output matrix to file
   writem(a, n, "p_output.txt");
