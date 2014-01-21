@@ -1,0 +1,21 @@
+SOBJS = floyd_serial.o stopwatch.o
+POBJS = floyd_parallel.o stopwatch.o
+DEPS = $(OBJS:.o=.d)
+CC = gcc
+CFLAGS = -Wall -Werror -O3
+SERIAL = floyd_serial
+PARALLEL = floyd_parallel
+LDLIBS =  -pthread
+
+all: $(SERIAL) $(PARALLEL)
+
+$(SERIAL): $(SOBJS)
+	$(CC) $(LDFLAGS) $(LDLIBS) $(SOBJS) -o $(SERIAL)
+
+$(PARALLEL): $(POBJS)
+	$(CC) $(LDFLAGS) $(LDLIBS) $(POBJS) -o $(PARALLEL)
+
+%.d: %.c
+
+clean:
+	-rm -f $(SOBJS) $(POBJS) $(SERIAL) *.o
