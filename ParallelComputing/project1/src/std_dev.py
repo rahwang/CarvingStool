@@ -12,7 +12,7 @@ with open(f, 'rb') as csvfile:
 #print data
 
 #print sum(data)/len(data)
-print "AVG: ", mean(data)
-print "DEV: ",std(data)
+print  mean(data), "\pm", 
+print std(data)
 
 
