@@ -14,3 +14,4 @@ $(TEST): $(TOBJS)
 
 clean:
 	-rm -f $(TOBJS) $(TEST) *.o
+	-rm -f $(TOBJS) $(TEST) *.d
