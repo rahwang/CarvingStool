@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+#include "../src/funcs.h"
+
+#define GREEN "\033[0;32m"
+#define NORM "\033[0m"
+#define RED "\033[0;31m"
+
+/* Format test results into pretty print statement */
+void res(int pass, char *test) {
+  if (pass) {
+    printf("| TEST: %25s: %s \tPASSED %s|\n", test, GREEN, NORM);
+  }
+  else {
+    printf("| TEST: %25s: %s \tFAILED %s|\n", test, RED, NORM);
+  }
+}
+
+
+/* TEST create_queues() 
+ * Should return array of SerialList pointers */
+int TESTcreate() {
+  int n = 10;
+  SerialList_t **new = create_queues(n);
+  printf("SIZE %ul\n", sizeof(new));
+  if (sizeof(new) == sizeof(SerialList_t *)*n) {
+    return 1;
+  }
+  return 0;
+}
+
+
+
+int main() {
+
+  
+  printf("\nTESTS for parallel_floyd.c\n\n");
+
+  res(TESTcreate(), "create_queues");
+
+  return 0;
+}
