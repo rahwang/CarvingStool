@@ -24,9 +24,10 @@ void serialHashPacketTest(int numMilliseconds,
 							long mean,
 							int initSize)
 {
+  
 
 	StopWatch_t timer;
-
+        int i;
 	PaddedPrimBool_NonVolatile_t done;
 	done.value = false;
 
@@ -36,7 +37,7 @@ void serialHashPacketTest(int numMilliseconds,
 	HashPacketGenerator_t * source = createHashPacketGenerator(fractionAdd,fractionRemove,hitRate,mean);
 	SerialHashTable_t * table = createSerialHashTable(1, maxBucketSize);
 
-	for( int i = 0; i < initSize; i++ ) {
+	for(i = 0; i < initSize; i++ ) {
 	  HashPacket_t * pkt = getAddPacket(source);
 	  add_ht(table,mangleKey(pkt), pkt->body);
 	}
@@ -71,6 +72,9 @@ void serialHashPacketTest(int numMilliseconds,
 	done.value = true;
 
 	memFence.value = true;
+	if (memFence.value) {
+	  ;
+	}
 
 	 rc = pthread_join(workerThread, &status);
 	 if (rc){
@@ -102,6 +106,9 @@ void parallelHashPacketTest(int numMilliseconds,
 	// allocate and initialize Lamport queues and hash table
 	//
 	HashPacketGenerator_t * source = createHashPacketGenerator(fractionAdd,fractionRemove,hitRate,mean);
+	if (source) {
+	  ;
+	}
 	//
 	// initialize your hash table w/ initSize number of add() calls using
 	// getAddPacket();
