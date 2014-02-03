@@ -1,20 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "funcs.h"
 
-#include "Utils/generators.h"
-#include "Utils/stopwatch.h"
-#include "Utils/fingerprint.h"
-#include "Utils/packetsource.h"
-
-#define DEFAULT_NUMBER_OF_ARGS 6
-
-void serialFirewall(const int,
-		    const int,
-		    const long,
-		    const int,
-		    const short);
+#define DEFAULT_NUMBER_OF_ARGS 7
 
 int main(int argc, char * argv[]) {
   
@@ -24,43 +10,11 @@ int main(int argc, char * argv[]) {
     const long mean = atol(argv[3]);
     const int uniformFlag = atoi(argv[4]);
     const short experimentNumber = (short)atoi(argv[5]);
+    const int queueDepth = atoi(argv[6]);
     
-    serialFirewall(numPackets,numSources,mean,uniformFlag,experimentNumber);
+    serial_firewall(numPackets,numSources,mean,uniformFlag,experimentNumber,queueDepth);
   }
   return 0;
 }
 
 
-void serialFirewall (int numPackets,
-		     int numSources,
-		     long mean,
-		     int uniformFlag,
-		     short experimentNumber)
-{
-  PacketSource_t * packetSource = createPacketSource(mean, numSources, experimentNumber);
-  StopWatch_t watch;
-  long fingerprint = 0;
-  int i, j;
-  
-  if( uniformFlag) {
-    startTimer(&watch);
-    for(i = 0; i < numSources; i++ ) {
-      for(j = 0; j < numPackets; j++ ) {
-	volatile Packet_t * tmp = getUniformPacket(packetSource,i);
-	fingerprint += getFingerprint(tmp->iterations, tmp->seed);
-      }
-    }
-    stopTimer(&watch);
-  }
-  else {
-    startTimer(&watch);
-    for(i = 0; i < numSources; i++ ) {
-      for(j = 0; j < numPackets; j++ ) {
-	volatile Packet_t * tmp = getExponentialPacket(packetSource,i);
-	fingerprint += getFingerprint(tmp->iterations, tmp->seed);
-      }
-    }
-    stopTimer(&watch);
-  }
-  printf("%f\n",getElapsedTime(&watch));
-}
