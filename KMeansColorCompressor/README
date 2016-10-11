@@ -1,7 +1,5 @@
-A simple color compression tool using the k-means algorithm, 
-an unsupervised machine learning algorithm good for clustering.
+A simple color compression tool using the k-means algorithm, an unsupervised machine learning algorithm good for clustering.
 
-There are many great explainations of the algorithm as pertains to compression out there. I like this one:
-https://nc404.wordpress.com/2014/05/07/k-means-clustering-and-image-compression/
+There are many great explainations of the algorithm as pertains to compression out there. I like this one: https://nc404.wordpress.com/2014/05/07/k-means-clustering-and-image-compression/
 
 Usage: python3 color_compressor.py [num_colors] [num_iterations] [input_image] [output_image]
