@@ -1,6 +1,6 @@
 # Food Fight!
 
-A simple button game with the simple premise, what if food came to life? It features adorable art, animations and music by [my talented teammates](http://phillydevnight.com/events/recent/what-if-jam/). My friend AJ and I handled the gameplay programming and game design.
+A simple button game with the simple premise, what if food came to life? It features adorable art, animations and music by [my talented teammates](http://phillydevnight.com/events/recent/what-if-jam/). My friend AJ and I handled the gameplay programming.
 
 This game was the winning entry for the two-week [What-If Game Jam](http://phillydevnight.com/events/recent/what-if-jam/) with [Philly Dev Night](http://phillydevnight.com/).
 
